@@ -53,6 +53,16 @@ jobs:
         
       - name: Build Docker Image
         run: docker build -t my-production-app:latest .
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Run Bandit SAST Security Scan
+        run: |
+          pip install bandit
+          bandit -r . -f custom
         
       # NEW: The Security Scanner
       - name: Run Trivy Vulnerability Scanner
