@@ -79,10 +79,11 @@ jobs:
       - name: Build local Docker image
         run: docker build -t devsecops-target:latest .
 
+      - name: Install Snyk CLI natively
+        uses: snyk/actions/setup@master
+
       - name: Run Snyk Container Security Scan
-        uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: devsecops-target:latest
-          args: --file=Dockerfile --severity-threshold=high
+        run: |
+          snyk container test devsecops-target:latest --file=Dockerfile --severity-threshold=high
