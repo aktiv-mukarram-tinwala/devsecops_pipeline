@@ -86,4 +86,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk container test devsecops-target:latest --file=Dockerfile --severity-threshold=high
+          snyk container test devsecops-target:latest --file=Dockerfile --severity-threshold=high -d
