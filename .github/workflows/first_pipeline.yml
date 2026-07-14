@@ -74,3 +74,14 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+      
+      - name: Build local Docker image
+        run: docker build -t devsecops-target:latest .
+
+      - name: Run Snyk Container Security Scan
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: devsecops-target:latest
+          args: --file=Dockerfile --severity-threshold=high
